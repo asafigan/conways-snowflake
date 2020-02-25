@@ -1,6 +1,5 @@
-import { Universe, Cell } from "wasm-game-of-life";
+import { Universe, Cell, create_buffer } from "wasm-game-of-life";
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
-
 
 const CELL_SIZE = 1; // px
 const DEAD_COLOR = "#FFFFFF";
@@ -19,10 +18,14 @@ canvas.width = CELL_SIZE * width;
 
 const ctx = canvas.getContext('2d');
 
+const buffer = create_buffer(CELL_SIZE * width * height * 4);
+
+const imageData = new ImageData(buffer, width, height);
+
 const renderLoop = () => {
   universe.tick();
-  clear();
-  drawCells();
+  universe.render_into(buffer);
+  ctx.putImageData(imageData, 0, 0);
 
   requestAnimationFrame(renderLoop);
 };

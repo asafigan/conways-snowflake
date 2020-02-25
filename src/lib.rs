@@ -1,6 +1,7 @@
 mod utils;
 
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::Clamped;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -35,8 +36,8 @@ impl Universe {
     pub fn new() -> Universe {
         utils::set_panic_hook();
 
-        let width = 64*4;
-        let height = 64*4;
+        let width = 64*10;
+        let height = 64*10;
 
         let cells = (0..width * height)
             .map(|i| {
@@ -55,8 +56,16 @@ impl Universe {
         }
     }
 
-    pub fn render(&self) -> String {
-        self.to_string()
+    pub fn render_into(&self, buffer: &mut[u8]) {
+        static BLACK: u32 = 0xFF000000;
+        static WHITE: u32 = 0xFFFFFFFF;
+        let (_, pixels,_) = unsafe { buffer.align_to_mut::<u32>() };
+        for (cell, pixel) in self.cells.iter().zip(pixels.iter_mut()) {
+            match cell {
+                Cell::Alive => *pixel = BLACK,
+                Cell::Dead => *pixel = WHITE,
+            }
+        }
     }
 
     fn get_index(&self, row: u32, column: u32) -> usize {
@@ -140,6 +149,11 @@ impl Universe {
         self.height = height;
         self.cells = (0..self.width * height).map(|_i| Cell::Dead).collect();
     }
+}
+
+#[wasm_bindgen]
+pub fn create_buffer(size: usize) -> Clamped<Vec<u8>> {
+    return Clamped(vec![0; size])
 }
 
 impl Universe {
