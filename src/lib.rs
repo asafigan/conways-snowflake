@@ -36,8 +36,8 @@ impl Universe {
     pub fn new() -> Universe {
         utils::set_panic_hook();
 
-        let width = 64*10;
-        let height = 64*10;
+        let width = 64 * 10;
+        let height = 64 * 10;
 
         let cells = (0..width * height)
             .map(|i| {
@@ -56,10 +56,10 @@ impl Universe {
         }
     }
 
-    pub fn render_into(&self, buffer: &mut[u8]) {
-        static BLACK: u32 = 0xFF000000;
-        static WHITE: u32 = 0xFFFFFFFF;
-        let (_, pixels,_) = unsafe { buffer.align_to_mut::<u32>() };
+    pub fn render_into(&self, buffer: &mut [u8]) {
+        static BLACK: u32 = 0xFF_00_00_00;
+        static WHITE: u32 = 0xFF_FF_FF_FF;
+        let (_, pixels, _) = unsafe { buffer.align_to_mut::<u32>() };
         for (cell, pixel) in self.cells.iter().zip(pixels.iter_mut()) {
             match cell {
                 Cell::Alive => *pixel = BLACK,
@@ -153,7 +153,7 @@ impl Universe {
 
 #[wasm_bindgen]
 pub fn create_buffer(size: usize) -> Clamped<Vec<u8>> {
-    return Clamped(vec![0; size])
+    Clamped(vec![0; size])
 }
 
 impl Universe {
@@ -169,21 +169,5 @@ impl Universe {
             let idx = self.get_index(row, col);
             self.cells[idx] = Cell::Alive;
         }
-    }
-}
-
-use std::fmt;
-
-impl fmt::Display for Universe {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        for line in self.cells.as_slice().chunks(self.width as usize) {
-            for &cell in line {
-                let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
-                write!(f, "{}", symbol)?;
-            }
-            write!(f, "\n")?;
-        }
-
-        Ok(())
     }
 }
