@@ -17,6 +17,7 @@ canvas.height = CELL_SIZE * height;
 canvas.width = CELL_SIZE * width;
 
 const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
 
 const buffer = create_buffer(CELL_SIZE * width * height * 4);
 
