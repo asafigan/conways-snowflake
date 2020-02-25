@@ -25,7 +25,7 @@ pub enum Cell {
 }
 
 #[wasm_bindgen]
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Universe {
     width: u32,
     height: u32,
