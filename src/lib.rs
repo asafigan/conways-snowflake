@@ -25,6 +25,7 @@ pub enum Cell {
 }
 
 #[wasm_bindgen]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Universe {
     width: u32,
     height: u32,
@@ -33,11 +34,8 @@ pub struct Universe {
 
 #[wasm_bindgen]
 impl Universe {
-    pub fn new() -> Universe {
+    pub fn new(width: u32, height: u32) -> Universe {
         utils::set_panic_hook();
-
-        let width = 64 * 10;
-        let height = 64 * 10;
 
         let cells = (0..width * height)
             .map(|i| {
@@ -130,24 +128,8 @@ impl Universe {
         self.height
     }
 
-    pub fn cells(&self) -> *const Cell {
-        self.cells.as_ptr()
-    }
-
-    /// Set the width of the universe.
-    ///
-    /// Resets all cells to the dead state.
-    pub fn set_width(&mut self, width: u32) {
-        self.width = width;
-        self.cells = (0..width * self.height).map(|_i| Cell::Dead).collect();
-    }
-
-    /// Set the height of the universe.
-    ///
-    /// Resets all cells to the dead state.
-    pub fn set_height(&mut self, height: u32) {
-        self.height = height;
-        self.cells = (0..self.width * height).map(|_i| Cell::Dead).collect();
+    pub fn clear(&mut self) {
+        self.cells = (0..self.width * self.height).map(|_i| Cell::Dead).collect();
     }
 }
 
@@ -157,11 +139,6 @@ pub fn create_buffer(size: usize) -> Clamped<Vec<u8>> {
 }
 
 impl Universe {
-    /// Get the dead and alive values of the entire universe.
-    pub fn get_cells(&self) -> &[Cell] {
-        &self.cells
-    }
-
     /// Set cells to be alive in a universe by passing the row and column
     /// of each cell as an array.
     pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
