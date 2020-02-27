@@ -1,5 +1,6 @@
 mod utils;
 
+use std::convert::TryInto;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::Clamped;
 
@@ -57,14 +58,14 @@ impl Universe {
     }
 
     pub fn render_into(&self, buffer: &mut [u8]) {
-        static BLACK: u32 = 0xFF_00_00_00;
-        static WHITE: u32 = 0xFF_FF_FF_FF;
-        let (_, pixels, _) = unsafe { buffer.align_to_mut::<u32>() };
-        for (cell, pixel) in self.next_generation.iter().zip(pixels.iter_mut()) {
-            match cell {
-                Cell::Alive => *pixel = BLACK,
-                Cell::Dead => *pixel = WHITE,
-            }
+        static BLACK: [u8; 4] = [0, 0, 0, 0xff];
+        static WHITE: [u8; 4] = [0xff; 4];
+        for (cell, pixel) in self.next_generation.iter().zip(buffer.chunks_exact_mut(4)) {
+            let pixel: &mut [u8; 4] = pixel.try_into().unwrap();
+            *pixel = match cell {
+                Cell::Alive => BLACK,
+                Cell::Dead => WHITE,
+            };
         }
     }
 
