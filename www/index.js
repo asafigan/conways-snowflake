@@ -15,7 +15,7 @@ canvas.width = width;
 const ctx = canvas.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 
-const buffer = create_buffer(width * height * 4);
+const buffer = new Uint8ClampedArray(width * height * 4);
 
 const imageData = new ImageData(buffer, width, height);
 

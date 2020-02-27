@@ -152,11 +152,6 @@ impl Universe {
     }
 }
 
-#[wasm_bindgen]
-pub fn create_buffer(size: usize) -> Clamped<Vec<u8>> {
-    Clamped(vec![0; size])
-}
-
 impl Universe {
     /// Set cells to be alive in a universe by passing the row and column
     /// of each cell as an array.
