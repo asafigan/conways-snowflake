@@ -1,7 +1,12 @@
-import { Universe, create_buffer } from "wasm-game-of-life";
+import { Universe } from "wasm-game-of-life";
 
-const width = 64 * 10;
-const height = 64 * 10;
+const minDimension = Math.min(window.innerWidth, window.innerHeight);
+const maxCoefficient = Math.floor((minDimension - 10) / 14);
+const coefficient = Math.round(Math.random() * maxCoefficient);
+
+const size = (2 * 7 * coefficient) + 10;
+const width = size;
+const height = size;
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new(width, height);
