@@ -58,8 +58,8 @@ impl Universe {
     }
 
     pub fn render_into(&self, buffer: &mut [u8]) {
-        static BLACK: [u8; 4] = [0, 0, 0, 0xff];
-        static WHITE: [u8; 4] = [0xff; 4];
+        const BLACK: [u8; 4] = [0, 0, 0, 0xff];
+        const WHITE: [u8; 4] = [0xff; 4];
         for (cell, pixel) in self.next_generation.iter().zip(buffer.chunks_exact_mut(4)) {
             let pixel: &mut [u8; 4] = pixel.try_into().unwrap();
             *pixel = match cell {
