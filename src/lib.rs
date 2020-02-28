@@ -1,21 +1,13 @@
-mod utils;
+pub mod utils;
 
 use std::convert::TryInto;
 use wasm_bindgen::prelude::*;
-use wasm_bindgen::Clamped;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-// A macro to provide `println!(..)`-style syntax for `console.log` logging.
-macro_rules! log {
-    ( $( $t:tt )* ) => {
-        web_sys::console::log_1(&format!( $( $t )* ).into());
-    }
-}
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -37,8 +29,6 @@ pub struct Universe {
 #[wasm_bindgen]
 impl Universe {
     pub fn new(width: u32, height: u32) -> Universe {
-        utils::set_panic_hook();
-
         let cells: Vec<_> = (0..width * height)
             .map(|i| {
                 if i % 2 == 0 || i % 7 == 0 {
