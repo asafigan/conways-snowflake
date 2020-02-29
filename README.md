@@ -1,6 +1,6 @@
 # Conway's Snowflake
 
-[![Build Status](https://travis-ci.com/sn99/wasm-template-rust.svg?branch=master)](https://travis-ci.com/sn99/wasm-template-rust)
+[![Build Status](https://travis-ci.com/asafigan/conways-snowflake.svg?branch=master)](https://travis-ci.com/asafigan/conways-snowflake)
 
 ## About
 
