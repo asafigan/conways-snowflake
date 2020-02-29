@@ -1,69 +1,42 @@
-<div align="center">
+# Conway's Snowflake
 
-  <h1><code>wasm-pack-template</code></h1>
-
-  <strong>A template for kick starting a Rust and WebAssembly project using <a href="https://github.com/rustwasm/wasm-pack">wasm-pack</a>.</strong>
-
-  <p>
-    <a href="https://travis-ci.org/rustwasm/wasm-pack-template"><img src="https://img.shields.io/travis/rustwasm/wasm-pack-template.svg?style=flat-square" alt="Build Status" /></a>
-  </p>
-
-  <h3>
-    <a href="https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html">Tutorial</a>
-    <span> | </span>
-    <a href="https://discordapp.com/channels/442252698964721669/443151097398296587">Chat</a>
-  </h3>
-
-  <sub>Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a></sub>
-</div>
+[![Build Status](https://travis-ci.com/sn99/wasm-template-rust.svg?branch=master)](https://travis-ci.com/sn99/wasm-template-rust)
 
 ## About
 
-[**📚 Read this template tutorial! 📚**][template-docs]
+Generates symmetrical [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) universes with [torus typologies](https://www.conwaylife.com/wiki/Torus).
 
-This template is designed for compiling Rust libraries into WebAssembly and
-publishing the resulting package to NPM.
+Made using [Rust 🦀 and WebAssembly 🕸](https://rustwasm.github.io/docs/book/) and modified to optimize rendering performance.
 
-Be sure to check out [other `wasm-pack` tutorials online][tutorials] for other
-templates and usages of `wasm-pack`.
+### Symmetry
 
-[tutorials]: https://rustwasm.github.io/docs/wasm-pack/tutorials/index.html
-[template-docs]: https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html
+Universes are horizontally and vertically symmetrical throughout the simulation.
 
-## 🚴 Usage
+### Rendering
 
-### 🐑 Use `cargo generate` to Clone this Template
+The largest optimization was to render using WebAssembly.
 
-[Learn more about `cargo generate` here.](https://github.com/ashleygwilliams/cargo-generate)
+Each cell is represented as a single pixel. Black is an alive cell and white is a dead cell.
 
-```
-cargo generate --git https://github.com/rustwasm/wasm-pack-template.git --name my-project
-cd my-project
-```
+The universe is rendered it into an [Uint8ClampedArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray) and interpreted as [ImageData](https://developer.mozilla.org/en-US/docs/Web/API/ImageData). This ImageData is then displayed onto a canvas using [putImageData()](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/putImageData).
 
-### 🛠️ Build with `wasm-pack build`
+## Build
 
-```
-wasm-pack build
-```
+### Requirements
+- [`rust-toolchain`](https://www.rust-lang.org/tools/install)
+- [`wasm-pack`](https://rustwasm.github.io/wasm-pack/installer/)
+- [`npm`](https://www.npmjs.com/get-npm)
 
-### 🔬 Test in Headless Browsers with `wasm-pack test`
+### Steps
+- Run `wasm-pack build` inside project dictionary
+- Run `npm install` inside [`www`](https://github.com/sn99/wasm-template-rust/tree/master/www) folder
+- Finally run `npm run start` inside [`www`](https://github.com/sn99/wasm-template-rust/tree/master/www) and visit http://localhost:8080 to see the results
 
-```
-wasm-pack test --headless --firefox
-```
+## License
 
-### 🎁 Publish to NPM with `wasm-pack publish`
+Licensed under either of these:
 
-```
-wasm-pack publish
-```
-
-## 🔋 Batteries Included
-
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-* [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
-  for logging panic messages to the developer console.
-* [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
-  for small code size.
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
+   https://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or
+   https://opensource.org/licenses/MIT)
