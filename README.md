@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/asafigan/conways-snowflake.svg?branch=master)](https://travis-ci.com/asafigan/conways-snowflake)
 
-# Live Demo
+## Live Demo
 
 Check out the [live demo](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). Refresh the page to generate a new world.
 
