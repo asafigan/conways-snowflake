@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.com/asafigan/conways-snowflake.svg?branch=master)](https://travis-ci.com/asafigan/conways-snowflake)
 
+# Live Demo
+
+Check out the [live demo](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). Refresh the page to generate a new world.
+
 ## About
 
 Generates symmetrical [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) universes with [torus typologies](https://www.conwaylife.com/wiki/Torus).
