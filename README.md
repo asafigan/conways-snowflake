@@ -4,7 +4,7 @@
 
 ## Live Demo
 
-Check out the [live demo](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). Refresh the page to generate a new world.
+Check out the [live demo](https://asafigan.github.io/conways-snowflake/). Refresh the page to generate a new world.
 
 ## About
 
